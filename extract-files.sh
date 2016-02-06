@@ -1,13 +1,38 @@
 #!/bin/bash
 
-# Use tradition sort
-export LC_ALL=C
-
 FP=$(cd ${0%/*} && pwd -P)
 export VENDOR=$(basename $(dirname $FP))
 export DEVICE=$(basename $FP)
 export BOARDCONFIGVENDOR=true
 
-../common/extract-files.sh $@
+mkdir system
+sudo mount -o loop -t ext4 system.ext4 system
+
+BASE=../../../vendor/$VENDOR/$DEVICE/proprietary
+rm -rf $BASE/*
+
+for FILE in `grep -v ^# proprietary-files.txt | grep -v ^$ | sort`
+do
+  # Split the file from the destination (format is "file[:destination]")
+  OLDIFS=$IFS IFS=":" PARSING_ARRAY=($FILE) IFS=$OLDIFS
+  FILE=${PARSING_ARRAY[0]}
+  DEST=${PARSING_ARRAY[1]}
+  if [ -z "$DEST" ]; then
+    DEST=$FILE
+  fi
+  DIR=`dirname $DEST`
+  if [ ! -d $BASE/$DIR ]; then
+    mkdir -p $BASE/$DIR
+  fi
+
+  cp ./system/$FILE $BASE/$DEST
+  # if file dot not exist try destination
+  if [ "$?" != "0" ]; then
+    cp ./system/$DEST $BASE/$DEST
+  fi
+done
 
 ../common/setup-makefiles.sh
+
+sudo umount system
+rm -rf system
