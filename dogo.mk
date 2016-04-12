@@ -24,6 +24,15 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.sensor.proximity.xml:system/etc/permissions/android.hardware.sensor.proximity.xml \
     frameworks/native/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml
 
+# Recovery
+PRODUCT_COPY_FILES += \
+	$(LOCAL_PATH)/recovery/etc/twrp.fstab:recovery/root/etc/twrp.fstab \
+	$(LOCAL_PATH)/recovery/sbin/xzdualrecovery.sh:recovery/root/sbin/xzdualrecovery.sh \
+	$(LOCAL_PATH)/recovery/init.rc:recovery/root/init.rc \
+	$(LOCAL_PATH)/recovery/init.original.rc:recovery/root/init.original.rc \
+	$(LOCAL_PATH)/recovery/init.recovery.usb.rc:recovery/root/init.recovery.usb.rc \
+	$(LOCAL_PATH)/recovery/sepolicy:recovery/root/sepolicy
+
 # Screen
 PRODUCT_AAPT_CONFIG := normal
 PRODUCT_AAPT_PREF_CONFIG := xxhdpi
@@ -57,6 +66,16 @@ PRODUCT_COPY_FILES += \
 # Touchpad
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/system/usr/idc/clearpad.idc:system/usr/idc/clearpad.idc
+
+PRODUCT_PROPERTY_OVERRIDES += \
+	persist.sys.usb.config=mtp,adb \
+	persist.sys.isUsbOtgEnabled=true
+
+ADDITIONAL_DEFAULT_PROPERTIES += \
+	ro.adb.secure=0 \
+	ro.secure=0 \
+	ro.allow.mock.location=1 \
+	persist.sys.root_access=1
 
 # call dalvik heap config
 $(call inherit-product, frameworks/native/build/phone-xxhdpi-2048-dalvik-heap.mk)
