@@ -10,6 +10,8 @@ on post-fs-data
     chmod 0660 /sys/class/android_usb/android0/f_rndis/ethaddr
     write /sys/class/android_usb/android0/iManufacturer ${ro.product.manufacturer}
     write /sys/class/android_usb/android0/f_rndis/manufacturer ${ro.product.manufacturer}
+	write /sys/class/android_usb/android0/idVendor 18D1
+    write /sys/class/android_usb/android0/idProduct 4EE7
 
 on property:sys.usb.config=none
     stop adbd

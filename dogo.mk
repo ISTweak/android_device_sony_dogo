@@ -26,12 +26,13 @@ PRODUCT_COPY_FILES += \
 
 # Recovery
 PRODUCT_COPY_FILES += \
-	$(LOCAL_PATH)/recovery/etc/twrp.fstab:recovery/root/etc/twrp.fstab \
-	$(LOCAL_PATH)/recovery/sbin/xzdualrecovery.sh:recovery/root/sbin/xzdualrecovery.sh \
-	$(LOCAL_PATH)/recovery/init.rc:recovery/root/init.rc \
-	$(LOCAL_PATH)/recovery/init.original.rc:recovery/root/init.original.rc \
-	$(LOCAL_PATH)/recovery/init.recovery.usb.rc:recovery/root/init.recovery.usb.rc \
-	$(LOCAL_PATH)/recovery/sepolicy:recovery/root/sepolicy
+	$(LOCAL_PATH)/recovery/root/etc/twrp.fstab:recovery/root/etc/twrp.fstab \
+	$(LOCAL_PATH)/recovery/root/init.rc:recovery/root/init.rc \
+	$(LOCAL_PATH)/recovery/root/init.original.rc:recovery/root/init.original.rc \
+	$(LOCAL_PATH)/recovery/root/init.recovery.usb.rc:recovery/root/init.recovery.usb.rc \
+	$(LOCAL_PATH)/recovery/root/sepolicy:recovery/root/sepolicy \
+	$(LOCAL_PATH)/recovery/root/property_contexts:recovery/root/property_contexts \
+	$(LOCAL_PATH)/recovery/root/sbin/xzdualrecovery.sh:recovery/root/sbin/xzdualrecovery.sh
 
 # Screen
 PRODUCT_AAPT_CONFIG := normal
@@ -76,6 +77,11 @@ ADDITIONAL_DEFAULT_PROPERTIES += \
 	ro.secure=0 \
 	ro.allow.mock.location=1 \
 	persist.sys.root_access=1
+
+# Hijack boot
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/rootdir/system/bin/taimport:system/bin/taimport \
+    $(LOCAL_PATH)/rootdir/system/hijack/hijack.sh:system/bin/hijack/hijack.sh
 
 # call dalvik heap config
 $(call inherit-product, frameworks/native/build/phone-xxhdpi-2048-dalvik-heap.mk)

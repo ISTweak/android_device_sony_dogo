@@ -11,7 +11,8 @@ sudo mount -o loop -t ext4 system.ext4 system
 BASE=../../../vendor/$VENDOR/$DEVICE/proprietary
 rm -rf $BASE/*
 
-for FILE in `grep -v ^# proprietary-files.txt | grep -v ^$ | sort`
+#for FILE in `grep -v ^# proprietary-files.txt | grep -v ^$ | sort`
+for FILE in `grep -v ^# proprietary-files.txt | grep -v ^$`
 do
   # Split the file from the destination (format is "file[:destination]")
   OLDIFS=$IFS IFS=":" PARSING_ARRAY=($FILE) IFS=$OLDIFS
@@ -32,7 +33,8 @@ do
   fi
 done
 
-../common/setup-makefiles.sh
-
 sudo umount system
 rm -rf system
+
+./setup-makefiles.sh
+../fusion3-common/extract-files.sh
