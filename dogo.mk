@@ -34,6 +34,13 @@ PRODUCT_COPY_FILES += \
 	$(LOCAL_PATH)/recovery/root/property_contexts:recovery/root/property_contexts \
 	$(LOCAL_PATH)/recovery/root/sbin/xzdualrecovery.sh:recovery/root/sbin/xzdualrecovery.sh
 
+# Boot
+PRODUCT_COPY_FILES += \
+	$(LOCAL_PATH)/rootdir/sbin/mr:root/sbin/mr \
+	$(LOCAL_PATH)/rootdir/sbin/tad_static:root/sbin/tad_static \
+	$(LOCAL_PATH)/rootdir/sbin/wait4tad_static:root/sbin/wait4tad_static \
+	$(LOCAL_PATH)/rootdir/sbin/wipedata:root/sbin/wipedata
+
 # Screen
 PRODUCT_AAPT_CONFIG := normal
 PRODUCT_AAPT_PREF_CONFIG := xxhdpi

@@ -35,7 +35,8 @@ insmod /system/lib/modules/byeselinux.ko
 mount -o remount,rw /
 insmod /system/lib/modules/wlan.ko
 insmod /system/lib/modules/cfg80211.ko
-
+#insmod /system/lib/modules/f2fs.ko
+insmod /system/lib/modules/texfat.ko
 mkdir /temp/
 mkdir /temp/log/
 #mkdir /temp/ramdisk/
@@ -48,4 +49,4 @@ chmod 0755 /temp/busybox
 cd /temp
 for i in `/temp/busybox --list` ; do ln -s /temp/busybox $i ; done
 
-/temp/sh -c /temp/hijack.sh
+exec /temp/sh -c /temp/hijack.sh

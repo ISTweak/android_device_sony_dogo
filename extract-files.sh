@@ -9,7 +9,7 @@ mkdir system
 sudo mount -o loop -t ext4 system.ext4 system
 
 BASE=../../../vendor/$VENDOR/$DEVICE/proprietary
-rm -rf $BASE/*
+rm -rf ../../../vendor/$VENDOR/$DEVICE
 
 #for FILE in `grep -v ^# proprietary-files.txt | grep -v ^$ | sort`
 for FILE in `grep -v ^# proprietary-files.txt | grep -v ^$`
